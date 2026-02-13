@@ -1,0 +1,13 @@
+{
+  "name": "@scope/design-tokens",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./src/index.css",
+  "files": ["src", "fonts"],
+  "exports": {
+    ".": "./src/index.css",
+    "./variables": "./src/variables.css",
+    "./base": "./src/base.css",
+    "./fonts/*": "./fonts/*"
+  }
+}

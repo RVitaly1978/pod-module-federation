@@ -1,0 +1,9 @@
+packages:
+  - 'app-react'
+  - 'app-vue2'
+  - 'app-vue3'
+  - 'host'
+  - 'nav-panel'
+  - 'ui-lib'
+  - 'config-unocss'
+  - 'design-tokens'

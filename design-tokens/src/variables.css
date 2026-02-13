@@ -1,0 +1,47 @@
+:root {
+  --font-main: 'Montserrat', system-ui, sans-serif;
+  --font-optional: 'Montserrat', system-ui, sans-serif;
+
+  --brand-300: #669B97;
+  --brand-500: #005851;
+  --brand-700: #003531;
+
+  --base-white: #FFFFFF;
+  --base-black: #000000;
+
+  --gray-50: #F8F8F8;
+  --gray-100: #F1F1F1;
+  --gray-200: #E4E4E4;
+  --gray-300: #D0D0D0;
+  --gray-400: #BDBDBD;
+  --gray-500: #ADADAD;
+  --gray-600: #8D8D8D;
+  --gray-700: #707070;
+  --gray-800: #505050;
+  --gray-900: #2F2F2F;
+
+  --error-100: #F0D3D1;
+  --error-300: #D27B74;
+  --error-500: #B42318;
+  --error-700: #6C150E;
+
+  --warning-100: #F1DECD;
+  --warning-300: #D49C68;
+  --warning-500: #B65902;
+  --warning-700: #6E3602;
+
+  --success-100: #CEE0D8;
+  --success-300: #6BA18A;
+  --success-500: #08623C;
+  --success-700: #053B24;
+
+  --information-100: #D1DBEE;
+  --information-300: #7492CB;
+  --information-500: #1849A9;
+  --information-700: #0E2C65;
+
+  --breakpoints-sm: 640px;
+  --breakpoints-md: 768px;
+  --breakpoints-lg: 1024px;
+  --breakpoints-xl: 1280px;
+}

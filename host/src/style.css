@@ -1,0 +1,31 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  color: var(--gray-600);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  transition: color 0.3s;
+  border-radius: 4px;
+}
+.router-link-active.nav-link {
+  color: var(--base-white);
+}
+.router-link-exact-active.nav-link {
+  background-color: var(--brand-500);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter,
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
