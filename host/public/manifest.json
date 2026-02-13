@@ -1,0 +1,7 @@
+{
+  "ui-lib": "http://localhost:5001/assets/remoteEntry.js",
+  "nav-panel": "http://localhost:5002/assets/remoteEntry.js",
+  "app-vue3": "http://localhost:5003/assets/remoteEntry.js",
+  "app-vue2": "http://localhost:5004/assets/remoteEntry.js",
+  "app-react": "http://localhost:5005/assets/remoteEntry.js"
+}

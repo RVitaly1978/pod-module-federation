@@ -1,0 +1,16 @@
+{
+  "name": "@scope/config-unocss",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./index.js",
+  "files": ["src", "index.js"],
+  "exports": {
+    ".": {
+      "import": "./index.js"
+    },
+    "./src/*": "./src/*" 
+  },
+  "devDependencies": {
+    "unocss": "^66.6.0"
+  }
+}
