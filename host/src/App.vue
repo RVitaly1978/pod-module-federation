@@ -1,12 +1,21 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, computed } from 'vue'
+import MfeDevTools from './components/MfeDevTools.vue'
 import GlobalSidebar from './components/GlobalSidebar.vue'
 
 const NavigationPanel = defineAsyncComponent(() => import('nav-panel/NavigationPanel'))
+
+const hasOverride = computed(() => {
+  const data = window.MFE?.getOverrides()
+  return data && Object.keys(data).length > 0
+})
 </script>
 
 <template>
-  <div class="min-h-screen bg-slate-900 text-base-white flex flex-col p-4 gap-4">
+  <div
+    class="min-h-screen bg-slate-900 text-base-white flex flex-col p-4 gap-4"
+    :class="hasOverride && 'fixed inset-0 z-9998 border-5 border-red-500 border-dashed'"
+  >
     <header>
       <Suspense>
         <template #default>
@@ -31,5 +40,7 @@ const NavigationPanel = defineAsyncComponent(() => import('nav-panel/NavigationP
         </router-view>
       </main>
     </div>
+
+    <MfeDevTools />
   </div>
 </template>

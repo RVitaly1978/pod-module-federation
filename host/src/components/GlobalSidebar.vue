@@ -1,7 +1,9 @@
 <template>
   <nav class="w-64 flex flex-col border-r border-slate-600 text-slate-300">
     <div class="font-bold text-xl flex items-center px-2">
-      <div class="w-100 h-10 bg-slate-600 rounded flex items-center justify-center">MFE Application</div>
+      <div class="w-100 h-10 bg-slate-600 rounded flex items-center justify-center">
+        MFE -<span class="text-warning-300">- {{ (isDev || !VERSION) ? 'local' : VERSION }}</span>
+      </div>
     </div>
 
     <div class="pa-2">
@@ -61,6 +63,9 @@
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMfeRoutesStore } from '../stores/mfe-routes'
+
+const isDev = import.meta.env.DEV
+const VERSION = import.meta.env.VITE_APP_VERSION
 
 const route = useRoute()
 const router = useRouter()

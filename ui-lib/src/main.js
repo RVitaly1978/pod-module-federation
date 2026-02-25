@@ -7,7 +7,7 @@ const rootElement = document.getElementById('standalone-ui')
 if (isDev && rootElement) {
   import('@unocss/reset/tailwind-compat.css')
   import('@scope/design-tokens')
-  import('virtual:uno.css')
+  // import('virtual:uno.css') // check UnoCSS({ mode: 'vue-scoped' })
   import('./style.css')
   
   createApp(App).mount(rootElement)

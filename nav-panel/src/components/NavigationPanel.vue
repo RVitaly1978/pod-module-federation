@@ -5,6 +5,9 @@ import { useRouter, useRoute } from 'vue-router'
 import { remoteUi } from '../utils/remote-loader'
 const UiButton = remoteUi('UiButton')
 
+const isDev = import.meta.env.DEV
+const VERSION = import.meta.env.VITE_APP_VERSION
+
 const router = useRouter()
 const route = useRoute()
 
@@ -47,6 +50,8 @@ const onClick = () => {
         </a>
       </router-link>
     </div>
+
+    <div class="font-bold text-base-black">{{ (isDev || !VERSION) ? 'local' : VERSION }}</div>
 
     <div>
       <UiButton :disabled="isDisabled" @click="onClick">Go to Home</UiButton>

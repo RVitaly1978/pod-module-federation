@@ -1,70 +1,63 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import federation from "@originjs/vite-plugin-federation"
 import UnoCSS from 'unocss/vite'
-// import fs from 'fs'
-// import path from 'path'
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
-export default defineConfig({
-  plugins: [
-    vue(),
-    UnoCSS(),
-    federation({
-      name: 'ui-lib',
-      filename: 'remoteEntry.js',
-      exposes: {
-        './components': './src/components/index.js',
-      },
-      shared: {
-        vue: {
-          singleton: true,
-          strictVersion: true,
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+  const PORT = env.VITE_LOCAL_PORT
+  const BASE = env.VITE_APP_BASE
+  const VERSION = env.VITE_APP_VERSION
+
+  return {
+    plugins: [
+      vue(),
+      UnoCSS({ mode: 'vue-scoped' }),
+      cssInjectedByJsPlugin(),
+      federation({
+        name: 'ui-lib',
+        filename: 'remoteEntry.js',
+        exposes: {
+          './components': './src/components/index.js',
         },
-      },
-    }),
-  ],
-  base: 'http://localhost:5001/',
-  server: {
-    port: 5001,
-    strictPort: true,
-  },
-  build: {
-    modulePreload: { resolveDependencies: () => [] },
-    target: 'esnext',
-    minify: false,
-    cssCodeSplit: false,
-    assetsInlineLimit: 0,
-    rollupOptions: {
-      external: ['vue'],
-      output: {
-        format: 'esm',
-        globals: {
-          vue: 'Vue'
+        shared: {
+          vue: {
+            singleton: true,
+            strictVersion: true,
+          },
+        },
+      }),
+    ],
+    base: env.NODE_ENV === 'development' ? `http://localhost:${PORT}/` : `/${BASE}/${VERSION}/`,
+    server: {
+      port: PORT,
+      strictPort: true,
+    },
+    build: {
+      modulePreload: { resolveDependencies: () => [] },
+      target: 'esnext',
+      minify: false,
+      cssCodeSplit: false,
+      assetsInlineLimit: 0,
+      rollupOptions: {
+        external: ['vue'],
+        output: {
+          format: 'esm',
+          globals: {
+            vue: 'Vue'
+          },
         },
       },
     },
-  },
-  preview: {
-    port: 5001,
-    strictPort: true,
-    cors: true,
-  },
-  esbuild: {
-    supported: {
-      'top-level-await': true,
+    preview: {
+      port: PORT,
+      strictPort: true,
+      cors: true,
     },
-  },
-  // css: {
-  //   preprocessorOptions: {
-  //     scss: {
-  //       additionalData: `@import "@scope/design-tokens/scss/_vars.scss";`
-  //     },
-  //   }
-  // },
-  // resolve: {
-  //   alias: {
-  //      '@scope/design-tokens': path.resolve(__dirname, '../../packages/design-tokens'),
-  //      '@scope/tokens': path.resolve(__dirname, '../../packages/theme'),
-  //   },
-  // }
-})
+    esbuild: {
+      supported: {
+        'top-level-await': true,
+      },
+    },
+}})

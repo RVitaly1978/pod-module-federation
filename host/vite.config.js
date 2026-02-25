@@ -10,10 +10,17 @@ import path from 'node:path'
 
 const manifestPath = path.resolve(__dirname, 'public/manifest.json')
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'))
-const remoteNames = Object.keys(manifest) || []
+const remoteNames = Object.keys(manifest.remotes) || []
+const remotes = remoteNames.reduce((acc, name) => {
+  acc[name] = `${name}-placeholder.js`
+  return acc
+}, {})
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
+  const PORT = env.VITE_LOCAL_PORT
+  const BASE = env.VITE_APP_BASE
+  const VERSION = env.VITE_APP_VERSION
 
   return {
     plugins: [
@@ -21,10 +28,7 @@ export default defineConfig(({ mode }) => {
       UnoCSS(),
       federation({
         name: 'host',
-        remotes: remoteNames.reduce((acc, name) => {
-          acc[name] = 'http://localhost/remoteEntry.js'
-          return acc
-        }, {}),
+        remotes,
         shared: {
           vue: {
             singleton: true,
@@ -45,9 +49,9 @@ export default defineConfig(({ mode }) => {
       }),
       // vueDevTools(),
     ],
-    base: env.NODE_ENV === 'development' ? 'http://localhost:5000/' : '/',
+    base: (env.NODE_ENV === 'development' || !VERSION) ? `http://localhost:${PORT}/` : `/${BASE}/${VERSION}/`,
     server: {
-      port: 5000,
+      port: PORT,
       strictPort: true,
       fs: {
         allow: ['..'] 
@@ -55,12 +59,17 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       target: 'esnext',
+      cssCodeSplit: false,
       rollupOptions: {
         external: remoteNames,
+        output: {
+          entryFileNames: 'index.js',
+          assetFileNames: 'assets/[name].[ext]'
+        },
       },
     },
     preview: {
-      port: 5000,
+      port: PORT,
       strictPort: true,
     },
     esbuild: {
