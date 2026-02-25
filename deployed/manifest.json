@@ -1,0 +1,51 @@
+{
+  "host": {
+    "active": "v1.0.0",
+    "versions": {
+      "v1.0.0": {
+        "js": "/host/v1.0.0/index.js",
+        "css": "/host/v1.0.0/assets/style.css"
+      },
+      "v2.0.0": {
+        "js": "/host/v2.0.0/index.js",
+        "css": "/host/v2.0.0/assets/style.css"
+      }
+    }
+  },
+  "remotes": {
+    "ui-lib": {
+      "active": "v1.0.0",
+      "versions": {
+        "v1.0.0": "/ui-lib/v1.0.0/assets/remoteEntry.js"
+      }
+    },
+    "nav-panel": {
+      "active": "v1.0.0",
+      "versions": {
+        "v1.0.0": "/nav-panel/v1.0.0/assets/remoteEntry.js",
+        "v2.0.0": "/nav-panel/v2.0.0/assets/remoteEntry.js"
+      }
+    },
+    "app-vue3": {
+      "active": "v1.0.0",
+      "versions": {
+        "v1.0.0": "/app-vue3/v1.0.0/assets/remoteEntry.js",
+        "v2.0.0": "/app-vue3/v2.0.0/assets/remoteEntry.js"
+      }
+    },
+    "app-vue2": {
+      "active": "v1.0.0",
+      "versions": {
+        "v1.0.0": "/app-vue2/v1.0.0/assets/remoteEntry.js",
+        "v2.0.0": "/app-vue2/v2.0.0/assets/remoteEntry.js"
+      }
+    },
+    "app-react": {
+      "active": "v1.0.0",
+      "versions": {
+        "v1.0.0": "/app-react/v1.0.0/assets/remoteEntry.js",
+        "v2.0.0": "/app-react/v2.0.0/assets/remoteEntry.js"
+      }
+    }
+  }
+}

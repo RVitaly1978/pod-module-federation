@@ -47,6 +47,14 @@ This is the best way to test the final bundles and integration before deployment
 ./run-preview.sh
 ```
 
+### Previewing the Build (Local Server)
+
+To run the production build locally without installing the **serve** package globally, use the following command:
+
+```bash
+npx serve -s -l 4999 ./deployed
+```
+
 ### 📋 Prerequisites
 
 1. **Permissions**: Ensure the scripts are executable:

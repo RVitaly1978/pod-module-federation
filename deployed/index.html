@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MFE App</title>
+  </head>
+  <body>
+    <div id="host-app"></div>
+    <script type="module">
+        async function bootstrap() {
+          try {
+            const response = await fetch('/manifest.json');
+            const manifest = await response.json();
+            const STORAGE_KEY = 'MFE_OVERRIDE';
+
+            window.MFE = {
+              manifest,
+              reset: () => {
+                localStorage.removeItem(STORAGE_KEY);
+                window.location.reload();
+              },
+              open: (data) => {
+                const event = new CustomEvent('open-mfe-devtools', { 
+                  detail: data || { timestamp: Date.now() } 
+                });
+                window.dispatchEvent(event);
+              },
+              getOverrides: () => JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'),
+              STORAGE_KEY,
+            };
+
+            const overrides = window.MFE.getOverrides();
+            const resolveUrl = (p) => p.startsWith('http') ? p : window.location.origin + p;
+
+            const hostVer = overrides.host || manifest.host.active;
+            const hostAssets = manifest.host.versions[hostVer] || manifest.host.versions[manifest.host.active];
+
+            if (hostAssets.css) {
+              const link = document.createElement('link');
+              link.rel = 'stylesheet';
+              link.href = resolveUrl(hostAssets.css);
+              document.head.appendChild(link);
+            }
+
+            window.__MFE_RUNTIME_REMOTES__ = {};
+            for (const [name, data] of Object.entries(manifest.remotes)) {
+              const val = overrides[name];
+              window.__MFE_RUNTIME_REMOTES__[name] = val?.startsWith('http') 
+                ? val
+                : resolveUrl(data.versions[val] || data.versions[data.active]);
+            }
+
+            const script = document.createElement('script');
+            script.type = 'module';
+            script.src = resolveUrl(hostAssets.js);
+            document.head.appendChild(script);
+
+          } catch (err) {
+            console.error("MFE Boot Error:", err);
+          }
+        }
+        bootstrap();
+    </script>
+  </body>
+</html>
