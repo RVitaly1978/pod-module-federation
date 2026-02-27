@@ -2,25 +2,21 @@ import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import federation from "@originjs/vite-plugin-federation"
 import UnoCSS from 'unocss/vite'
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  const PORT = env.VITE_LOCAL_PORT
-  const BASE = env.VITE_APP_BASE
+  const isDev = env.NODE_ENV === 'development'
+  const PORT = env.VITE_LOCAL_PORT || 5002
+  const BASE = env.VITE_APP_BASE || 'nav-panel'
   const VERSION = env.VITE_APP_VERSION
 
   return {
     plugins: [
       vue(),
-      UnoCSS({ mode: 'vue-scoped' }),
-      cssInjectedByJsPlugin(),
+      UnoCSS(),
       federation({
         name: 'nav-panel',
         filename: 'remoteEntry.js',
-        remotes: {
-          'ui-lib': '/ui-lib/v1.0.0/assets/remoteEntry.js'
-        },
         exposes: {
           './NavigationPanel': './src/components/NavigationPanel.vue'
         },
@@ -28,45 +24,38 @@ export default defineConfig(({ mode }) => {
           vue: {
             singleton: true,
             strictVersion: true,
-            requiredVersion: '3.5.28',
+            // requiredVersion: '3.5.28',
           },
           'vue-router': {
             singleton: true,
-            requiredVersion: '4.6.4',
             strictVersion: true,
+            // requiredVersion: '4.6.4',
+          },
+          '@scope/ui-lib': {
+            singleton: true,
+            strictVersion: true,
+            // requiredVersion: 'workspace:*',
           },
         },
       }),
     ],
-    base: (env.NODE_ENV === 'development' || !VERSION) ? `http://localhost:${PORT}/` : `/${BASE}/${VERSION}/`,
+    base: (isDev || !VERSION) ? '/' : `/${BASE}/${VERSION}/`,
     server: {
       port: PORT,
       strictPort: true,
-      fs: {
-        allow: ['..'] 
-      },
+      origin: `http://localhost:${PORT}`,
+      cors: true,
     },
     build: {
-      modulePreload: { resolveDependencies: () => [] },
       target: 'esnext',
+      modulePreload: false,
       minify: false,
       cssCodeSplit: false,
-      assetsInlineLimit: 0,
-      rollupOptions: {
-        output: {
-          format: 'esm'
-        }
-      },
     },
     preview: {
       port: PORT,
       strictPort: true,
       cors: true,
-    },
-    esbuild: {
-      supported: {
-        'top-level-await': true,
-      },
     },
     optimizeDeps: {
       exclude: ['@scope/ui-lib'],

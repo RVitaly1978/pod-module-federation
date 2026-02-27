@@ -34,8 +34,14 @@
             const overrides = window.MFE.getOverrides();
             const resolveUrl = (p) => p.startsWith('http') ? p : window.location.origin + p;
 
-            const hostVer = overrides.host || manifest.host.active;
-            const hostAssets = manifest.host.versions[hostVer] || manifest.host.versions[manifest.host.active];
+            let hostAssets = {};
+            if (overrides.host) {
+              hostAssets = typeof overrides.host === 'string'
+                ? manifest.host.versions[overrides.host]
+                : overrides.host;
+            } else {
+              hostAssets = manifest.host.versions[manifest.host.active];
+            }
 
             if (hostAssets.css) {
               const link = document.createElement('link');

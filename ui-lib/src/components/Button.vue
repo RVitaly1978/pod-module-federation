@@ -21,7 +21,7 @@ const computedClass = computed(() => {
     'h-[48px] min-w-[48px] min-h-[48px] max-h-[48px] px-4 py-[14px] gap-2',
     'text-base font-bold leading-normal text-base-white',
     'border-4',
-    'bg-brand-500 border-warning-700',
+    'bg-brand-500 border-transparent',
     'hover:enabled:bg-brand-300',
     'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
     'active:enabled:bg-brand-700',

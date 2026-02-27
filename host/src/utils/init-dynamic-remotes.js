@@ -4,14 +4,18 @@ export async function initDynamicRemotes () {
   let remotesConfig = window.__MFE_RUNTIME_REMOTES__
 
   if (!remotesConfig) {
-    console.warn('MFE Runtime: No remote configuration found in window.')
-    // return
+    const isStandalone = !!import.meta.env.VITE_STANDALONE
 
-    // TODO: should be available only for running and building host locally
+    if (!isStandalone) {
+      console.warn('MFE Runtime: No remote configuration found in window.')
+      return
+    }
+
     try {
+      const STORAGE_KEY = 'MFE_OVERRIDE' 
       const response = await fetch('/manifest.json')
       const manifest = await response.json()
-      const overrides = JSON.parse(localStorage.getItem('MFE_OVERRIDE') || '{}')
+      const overrides = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')
     
       const resolveUrl = (p) => p.startsWith('http') ? p : window.location.origin + p
     
@@ -21,6 +25,22 @@ export async function initDynamicRemotes () {
         remotesConfig[name] = val?.startsWith('http') 
           ? val
           : resolveUrl(data.versions[val] || data.versions[data.active])
+      }
+
+      window.MFE = {
+        manifest,
+        reset: () => {
+          localStorage.removeItem(STORAGE_KEY)
+          window.location.reload()
+        },
+        open: (data) => {
+          const event = new CustomEvent('open-mfe-devtools', { 
+            detail: data || { timestamp: Date.now() } 
+          })
+          window.dispatchEvent(event)
+        },
+        getOverrides: () => JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'),
+        STORAGE_KEY,
       }
     } catch (error) {
       console.error('MFE Runtime: Failed to register remotes:', error)

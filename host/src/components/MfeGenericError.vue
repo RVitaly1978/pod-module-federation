@@ -12,9 +12,7 @@
 </template>
 
 <script setup>
-import { remoteUi } from '../utils/remote-loader'
-
-const UiButton = remoteUi('UiButton')
+import { UiButton } from '@scope/ui-lib/src/index.js'
 
 const props = defineProps({
   appName: String,

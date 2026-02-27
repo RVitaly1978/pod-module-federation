@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-REMOTES=("ui-lib" "nav-panel" "app-vue2" "app-vue3" "app-react")
+REMOTES=("nav-panel" "app-vue2" "app-vue3" "app-react")
 
 trap "kill 0" EXIT
 

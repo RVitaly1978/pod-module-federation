@@ -3,11 +3,11 @@ import { createMemoryRouter, createBrowserRouter, RouterProvider } from 'react-r
 import App from './App'
 import { routesConfig } from './routes.config'
 
-let router = null
-let root = null
-
 import 'virtual:uno.css'
 import './style.css'
+
+let router = null
+let root = null
 
 export const getRoutes = () => routesConfig.map(({ lazy, ...rest }) => rest)
 

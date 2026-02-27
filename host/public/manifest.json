@@ -1,42 +1,44 @@
 {
   "host": {
-    "active": "v1.0.0",
+    "active": "local",
     "versions": {
       "v1.0.0": {
+        "js": "http://localhost:4999/host/v1.0.0/index.js",
+        "css": "http://localhost:4999/host/v1.0.0/assets/style.css"
+      },
+      "local": {
         "js": "http://localhost:5000/index.js",
         "css": "http://localhost:5000/assets/style.css"
       }
     }
   },
   "remotes": {
-    "ui-lib": {
-      "active": "v1.0.0",
-      "versions": {
-        "v1.0.0": "http://localhost:5001/assets/remoteEntry.js"
-      }
-    },
     "nav-panel": {
-      "active": "v1.0.0",
+      "active": "local",
       "versions": {
-        "v1.0.0": "http://localhost:5002/assets/remoteEntry.js"
+        "v1.0.0": "http://localhost:4999/nav-panel/v1.0.0/assets/remoteEntry.js",
+        "local": "http://localhost:5002/assets/remoteEntry.js"
       }
     },
     "app-vue3": {
-      "active": "v1.0.0",
+      "active": "local",
       "versions": {
-        "v1.0.0": "http://localhost:5003/assets/remoteEntry.js"
+        "v1.0.0": "http://localhost:4999/app-vue3/v1.0.0/assets/remoteEntry.js",
+        "local": "http://localhost:5003/assets/remoteEntry.js"
       }
     },
     "app-vue2": {
-      "active": "v1.0.0",
+      "active": "local",
       "versions": {
-        "v1.0.0": "http://localhost:5004/assets/remoteEntry.js"
+        "v1.0.0": "http://localhost:4999/app-vue2/v1.0.0/assets/remoteEntry.js",
+        "local": "http://localhost:5004/assets/remoteEntry.js"
       }
     },
     "app-react": {
-      "active": "v1.0.0",
+      "active": "local",
       "versions": {
-        "v1.0.0": "http://localhost:5005/assets/remoteEntry.js"
+        "v1.0.0": "http://localhost:4999/app-react/v1.0.0/assets/remoteEntry.js",
+        "local": "http://localhost:5005/assets/remoteEntry.js"
       }
     }
   }

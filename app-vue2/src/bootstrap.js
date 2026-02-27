@@ -3,11 +3,11 @@ import Router from 'vue-router'
 import App from './App.vue'
 import { routesConfig } from './routes.config'
 
-let router = null
-let vm = null
-
 import 'virtual:uno.css'
 import './style.css'
+
+let router = null
+let vm = null
 
 export const getRoutes = () => routesConfig.map(({ component, ...rest }) => rest)
 
